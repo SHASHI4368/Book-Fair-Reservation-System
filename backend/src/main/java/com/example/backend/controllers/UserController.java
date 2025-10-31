@@ -30,9 +30,10 @@ public class UserController {
     ){
         LoginDto loginDto = userService.verifyUser(user);
         if(loginDto == null){
-            return ResponseEntity.status(401).body(new ApiResponse(false,"Invalid username or password", null));
+            return ResponseEntity.status(401)
+                    .body(new ApiResponse(false,"Invalid username or password", null));
         }
-        return ResponseEntity.ok(new ApiResponse(true,"User logged in successfully", userService.verifyUser(user)));
+        return ResponseEntity.ok(new ApiResponse(true,"User logged in successfully", loginDto));
     }
 
     @GetMapping("/auth/{username}")

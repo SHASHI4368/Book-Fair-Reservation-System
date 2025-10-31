@@ -26,6 +26,11 @@ public class JWTFilter  extends OncePerRequestFilter {
         this.myUserDetailsService = myUserDetailsService;
     }
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return path.equals("/api/v1/users/register") || path.equals("/api/v1/users/login");
+    }
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
