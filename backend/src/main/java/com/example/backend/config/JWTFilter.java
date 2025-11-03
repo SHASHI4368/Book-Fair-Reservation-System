@@ -25,11 +25,15 @@ public class JWTFilter  extends OncePerRequestFilter {
         this.jwtService = jwtService;
         this.myUserDetailsService = myUserDetailsService;
     }
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return path.equals("/api/v1/users/register") || path.equals("/api/v1/users/login");
+        return path.equals("/api/v2/users/register")
+                || path.equals("/api/v2/users/login")
+                || path.equals("/api/v2/users/register-moderator");
     }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,

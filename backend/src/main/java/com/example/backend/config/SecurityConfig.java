@@ -27,9 +27,11 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 // enable authentication for all requests
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/users/register", "/api/v1/users/login")
-                        .permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v2/users/register", "/api/v2/users/login")
+                        .anonymous().requestMatchers("/api/v2/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v2/servent/**").hasAnyRole("ADMIN","MODERATOR")
+                        .requestMatchers("/api/v2/venor/**").hasAnyRole("USER")
                         .anyRequest().authenticated())
                 // use HTTP Basic authentication
                 .httpBasic(Customizer.withDefaults())
